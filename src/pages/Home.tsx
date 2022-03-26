@@ -12,20 +12,37 @@ import {
 } from 'react-native';
 
 import { Button } from '../components/Button';
-import { Card } from '../components/Card';
+import { SkillCard } from '../components/SkillCard';
 
+interface SkillData {
+  id: string;
+  name: string;
+}
+ 
 export const Home = () => {
 
   let header = "Welcome, Luis!"
-  let listTitle = "My Skills"
+  let listTitle = "My Skills" 
 
   const [skill, setSkill] = useState('');
-  const [skillList, setSkillList] = useState([]);
+  const [skillList, setSkillList] = useState<SkillData[]>([]);
   const [greetinsMessage, setGreetinsMessage] = useState("Hello There!");
 
 
   function handleAddSkill() {
-    setSkillList(oldState => [...oldState, skill])
+
+    const data = {
+      id: String(new Date().getTime()),
+      name: skill,
+    }
+
+    setSkillList(oldState => [...oldState, data])
+  }
+
+  function handleDeleteSkill(id: string){
+    setSkillList(oldState => oldState.filter(
+      skill => skill.id !== id
+    ));
   }
 
   useEffect(() => {
@@ -67,11 +84,11 @@ export const Home = () => {
         <TextInput
           style={styles.input}
           placeholder="Add Skill"
-          placeholderTextColor={styles.inputTextColor}
+          placeholderTextColor="#6d6d6d"
           onChangeText={setSkill}
         />
 
-        <Button onPress={handleAddSkill} />
+        <Button title="New Skill" onPress={handleAddSkill} />
 
         <Text
           style={styles.listTitle}
@@ -79,10 +96,11 @@ export const Home = () => {
 
         <FlatList
           data={skillList}
-          keyExtractor={item => item}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
 
-            <Card skill={item} />
+            <SkillCard title={item.name} 
+            onPress={() => handleDeleteSkill(item.id)} />
           )}
         />
 
@@ -116,8 +134,6 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold',
   },
-
-  inputTextColor: "#6d6d6d",
 
   listTitle: {
     color: '#FFF',
