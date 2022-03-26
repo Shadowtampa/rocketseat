@@ -1,40 +1,68 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 
 import {
   SafeAreaView,
   Text,
   TextInput,
   FlatList,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 
-export function Home() {
+export const Home = () => {
 
   let header = "Welcome, Luis!"
   let listTitle = "My Skills"
 
   const [skill, setSkill] = useState('');
   const [skillList, setSkillList] = useState([]);
+  const [greetinsMessage, setGreetinsMessage] = useState("Hello There!");
 
 
   function handleAddSkill() {
     setSkillList(oldState => [...oldState, skill])
   }
 
+  useEffect(() => {
+    let currentHour = new Date().getHours() - 3;
+
+    if (currentHour < 0) {
+      currentHour += 24;
+    }
+
+    let message = "Good Morning! 🌅";
+
+    if (currentHour > 12) {
+      message = "Good evening! ☀️";
+    }
+    if (currentHour > 18) {
+      message = "Good Night! 🌃";
+    }
+
+    setGreetinsMessage(message);
+  }, []);
 
   return (
     <>
+
       <SafeAreaView
         style={styles.container}
       >
 
+        
         <Text
           style={styles.header}
         >{header}
         </Text>
+
+        <Text
+          style={styles.listSubTitle}
+        >{greetinsMessage} </Text>
 
         <TextInput
           style={styles.input}
@@ -47,7 +75,8 @@ export function Home() {
 
         <Text
           style={styles.listTitle}
-        >{listTitle}</Text>
+        >{listTitle}: {skillList.length}</Text>
+
         <FlatList
           data={skillList}
           keyExtractor={item => item}
@@ -96,6 +125,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 30,
 
+  },
+  listSubTitle: {
+    color: '#FFF',
+    fontSize: 15,
+    marginTop: 3,
   },
 
   skill: {
