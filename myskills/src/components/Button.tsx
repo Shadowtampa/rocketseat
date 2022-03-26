@@ -6,11 +6,11 @@ import {
   StyleSheet
 } from 'react-native';
 
-interface ButtonProps extends TouchableOpacityProps{
-  title : string;
+interface ButtonProps extends TouchableOpacityProps {
+  title: string;
 };
 
-export function Button({ title, ...allProps } : ButtonProps) {
+export function Button({ title, ...allProps }: ButtonProps) {
   return (
     <TouchableOpacity
       style={styles.button}
@@ -21,7 +21,7 @@ export function Button({ title, ...allProps } : ButtonProps) {
       >{title}</Text>
     </TouchableOpacity>
   )
-} 
+}
 
 const styles = StyleSheet.create({
   button: {
@@ -36,4 +36,5 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold',
   },
+
 });

@@ -54,10 +54,10 @@ export const Home = () => {
 
     let message = "Good Morning! 🌅";
 
-    if (currentHour > 12) {
+    if (currentHour >= 12) {
       message = "Good evening! ☀️";
     }
-    if (currentHour > 18) {
+    if (currentHour >= 18 || currentHour <=5 ) {
       message = "Good Night! 🌃";
     }
 
