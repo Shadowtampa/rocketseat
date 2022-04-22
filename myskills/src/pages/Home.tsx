@@ -30,7 +30,7 @@ export const Home = () => {
 
 
   function handleAddSkill() {
-
+    
     const data = {
       id: String(new Date().getTime()),
       name: skill,
